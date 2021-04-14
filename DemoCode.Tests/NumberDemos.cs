@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoFixture;
 using Xunit;
 
 namespace DemoCode.Tests
@@ -14,9 +10,10 @@ namespace DemoCode.Tests
         {
             // arrange
             var sut = new IntCalculator();
+            var fixture = new Fixture();
 
             // act
-            sut.Subtract(1);
+            sut.Subtract(fixture.Create<int>());
 
             // assert
             Assert.True(sut.Value < 0);
