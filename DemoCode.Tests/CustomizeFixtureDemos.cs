@@ -74,5 +74,84 @@ namespace DemoCode.Tests
 
             Assert.Equal(id + "-" + customerName, sut.ToString());
         }
+
+        [Fact]
+        public void OmitSettingSpecificProperties()
+        {
+            // arrange
+            var fixture = new Fixture();
+
+            var flight = fixture.Build<FlightDetails>()
+                                .Without(x => x.ArrivalAirportCode)
+                                .Without(x => x.DepartureAirportCode)
+                                .Create();
+
+            // etc.
+        }
+
+        [Fact]
+        public void OmitSettingAllProperties()
+        {
+            // arrange
+            var fixture = new Fixture();
+
+            var flight = fixture.Build<FlightDetails>()
+                                .OmitAutoProperties()
+                                .Create();
+
+            // etc.
+        }
+
+        [Fact]
+        public void CustomizedBuilding()
+        {
+            // arrange
+            var fixture = new Fixture();
+
+            var flight = fixture.Build<FlightDetails>()
+                                .With(x => x.ArrivalAirportCode, "LAX")
+                                .With(x => x.DepartureAirportCode, "LHR")
+                                .Create();
+
+            // etc.
+        }
+
+        [Fact]
+        public void CustomizedBuildingWithActions()
+        {
+            // arrange
+            var fixture = new Fixture();
+
+            var flight = fixture.Build<FlightDetails>()
+                                .With(x => x.ArrivalAirportCode, "LAX")
+                                .With(x => x.DepartureAirportCode, "LHR")
+                                .Without(x => x.MealOptions)
+                                .Do(x => x.MealOptions.Add("Chicken"))
+                                .Do(x => x.MealOptions.Add("Fish"))
+                                .Create();
+
+            // etc.
+        }
+
+        [Fact]
+        public void CustomizedBuildingForAllTypesInFixture()
+        {
+            // arrange
+            var fixture = new Fixture();
+
+            fixture.Customize<FlightDetails>(fd =>
+                fd.With(x => x.ArrivalAirportCode, "LAX")
+                  .With(x => x.DepartureAirportCode, "LHR")
+                  .With(x => x.AirlineName, "Fly Fly Premium Air")
+                  .Without(x => x.MealOptions)
+                  .Do(x => x.MealOptions.Add("Chicken"))
+                  .Do(x => x.MealOptions.Add("Fish"))); // notice no Create() is required
+            // this is only HOW to create in the future
+
+            var flight1 = fixture.Create<FlightDetails>();
+            var flight2 = fixture.Create<FlightDetails>();
+
+            // etc.
+        }
     }
 }
