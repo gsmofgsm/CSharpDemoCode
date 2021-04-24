@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using AutoFixture;
+using AutoFixture.Xunit2;
 
 namespace DemoCode.Tests
 {
@@ -13,6 +14,16 @@ namespace DemoCode.Tests
         {
             var sut = new Calculator();
 
+            sut.Add(a);
+            sut.Add(b);
+
+            Assert.Equal(a + b, sut.Value);
+        }
+
+        [Theory]
+        [AutoData]
+        public void AddTwoPositiveNumbers(int a, int b, Calculator sut)
+        {
             sut.Add(a);
             sut.Add(b);
 
