@@ -18,6 +18,11 @@ namespace DemoCode
         public Customer Customer { get; set; }
         public List<OrderItem> Items { get; set; }
         public DateTime OrderDate { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id}-{Customer.CustomerName}";
+        }
     }
 
     public class OrderItem

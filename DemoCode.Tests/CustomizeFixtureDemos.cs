@@ -56,5 +56,23 @@ namespace DemoCode.Tests
 
             // etc.
         }
+
+        [Fact]
+        public void FreezingValues()
+        {
+            var fixture = new Fixture();
+
+            //var id = fixture.Create<int>();
+            //fixture.Inject(id);
+            var id = fixture.Freeze<int>();
+
+            //var customerName = fixture.Create<string>();
+            //fixture.Inject(customerName);
+            var customerName = fixture.Freeze<string>();
+
+            var sut = fixture.Create<Order>();
+
+            Assert.Equal(id + "-" + customerName, sut.ToString());
+        }
     }
 }
