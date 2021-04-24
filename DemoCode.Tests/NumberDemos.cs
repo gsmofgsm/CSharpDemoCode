@@ -18,5 +18,22 @@ namespace DemoCode.Tests
             // assert
             Assert.True(sut.Value < 0);
         }
+
+        [Fact]
+        public void Decimals()
+        {
+            // arrange
+            var sut = new DecimalCalculator();
+            var fixture = new Fixture();
+
+            // act
+            decimal num = fixture.Create<decimal>();
+            sut.Add(num);
+
+            // assert
+            Assert.Equal(num, sut.Value);
+        }
+
+
     }
 }
