@@ -20,5 +20,18 @@ namespace DemoCode.Tests
 
             // etc.
         }
+
+        [Fact]
+        public void CustomizedPipeline()
+        {
+            // arrange
+            var fixture = new Fixture();
+            fixture.Customizations.Add(new AirportCodesStringPropertyGenerator());
+
+            var flight = fixture.Create<FlightDetails>();
+            var airport = fixture.Create<Airport>();
+
+            // etc.
+        }
     }
 }
